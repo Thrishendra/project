@@ -1,4 +1,4 @@
-# Object Detection-project
+# project
 ## Aim
 To write a python program using OpenCV to do the following image manipulations.
 i) Extract ROI from  an image.
@@ -44,45 +44,36 @@ Set the model and Threshold to 0.5
 Flatten the index,confidence.
 ### Step8:
 Display the result.
-## Program:
+
+```
+DEVELOPED BY : T Thrishendra
+reg no : 212223230227
+```
 ## I)Perform ROI from an image
-```python
-#Import necessary packages 
+```
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
 
-
-# Read the image and convert the image into RGB
-image_path = 'dog.jpg'
-img = cv2.imread(image_path)
-img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
-
-# Display the image
-plt.imshow(img_rgb)
-plt.title('Original Image')
-plt.axis('off')
-plt.show()
-
-
-# Create an ROI mask
+image = cv2.imread('hawamahal.png')
+image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+cv2.imshow('Original Image', image_rgb)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 roi_mask = np.zeros_like(image_rgb)
-roi_mask[100:250, 100:250, :] = 255  # Define the ROI region(Dog-face)
-
-# Segment the ROI using bitwise AND operation
+roi_mask[100:300, 200:400, :] = 255  
 segmented_roi = cv2.bitwise_and(image_rgb, roi_mask)
-
-# Step 5: Display the segmented ROI
-plt.imshow(segmented_roi)
-plt.title('Segmented ROI')
-plt.axis('off')
-
-# Show both images side by side
-plt.show()
+cv2.imshow('Segmented ROI', segmented_roi)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 ```
+![image](https://github.com/YendluriChandana/project/assets/139842204/db7dc662-2999-4543-8095-c1b6bd634827)
+
+![Screenshot 2024-05-09 085255](https://github.com/YendluriChandana/project/assets/139842204/90c1105b-7759-4478-ab85-551908e0190f)
+
+
+
 ## II)Perform handwritting detection in an image
-```python
+```
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -106,72 +97,43 @@ def detect_handwriting(image_path):
     plt.axis('off')
     plt.show()
     
-image_path = 'handwriting.jpg'
+image_path = 'proverb.png'
 detect_handwriting(image_path)
 ```
+![Screenshot 2024-05-09 085819](https://github.com/YendluriChandana/project/assets/139842204/16efaa14-2da8-48d0-9370-c2097ba35cd6)
 ## III)Perform object detection with label in an image
-```python
-# Import necessary packages 
-import cv2
-import matplotlib.pyplot as plt
-
-# Set and add the config_file,weights to ur folder.
+```
 config_file='ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt'
 frozen_model='frozen_inference_graph.pb'
 
-# Use a pretrained Dnn model (MobileNet-SSD v3)
 model=cv2.dnn_DetectionModel(frozen_model,config_file)
 
-# Create a classLabel and print the same
 classLabels = []
 file_name='Labels.txt'
 with open(file_name,'rt')as fpt:
     classLabels=fpt.read().rstrip('\n').split('\n')
 
-# Print the classLabels
 print(classLabels)
-
 print(len(classLabels))
-
-# Display the image using imshow()
-img=cv2.imread('download.jpeg')
+img=cv2.imread('bike.jpg')
 plt.imshow(img)
-
 plt.imshow(cv2.cvtColor(img,cv2.COLOR_BGR2RGB))
-
-
-# Set the model and Threshold to 0.5
 model.setInputSize(320,320)
 model.setInputScale(1.0/127.5)#255/2=127.5
 model.setInputMean((127.5,127.5,127.5))
 model.setInputSwapRB(True)
 ClassIndex,confidence,bbox=model.detect(img,confThreshold=0.5)
 print(ClassIndex)
-
-
-# Flatten the index,confidence.
 font_scale=3
 font=cv2.FONT_HERSHEY_PLAIN
 for ClassInd,conf,boxes in zip(ClassIndex.flatten(),confidence.flatten(),bbox):
     cv2.rectangle(img,boxes,(0,0,255),2)
     cv2.putText(img,classLabels[ClassInd-1],(boxes[0]+10,boxes[1]+40),font,fontScale=font_scale,color=(255,0,0),thickness=1)
-
-
-# Display the result.
 plt.imshow(cv2.cvtColor(img,cv2.COLOR_BGR2RGB))
 ```
-## I)Perform ROI from an image:
-![image](https://github.com/user-attachments/assets/11627702-9190-4884-af45-77c41e59f524)
-![image](https://github.com/user-attachments/assets/56ea969f-2059-454b-9185-9bde1298dff5)
+![image](https://github.com/YendluriChandana/project/assets/139842204/aa0a4a27-b934-4a60-9e7a-5913f3da19d2)
 
-## II)Perform handwritting detection in an image:
-![image](https://github.com/user-attachments/assets/66b135af-5b6f-4678-8933-abe1ccd75e7a)
+## RESULT :
+Thus, a python program using OpenCV for following image manipulations is done successfully
 
-## III)Perform object detection with label in an image:
-![image](https://github.com/swethamohanraj/project/assets/94228215/f013cf98-0fa0-4ce4-9fa9-f9b12747a90e)
-![image](https://github.com/swethamohanraj/project/assets/94228215/3e4a66ff-a37e-45b2-be39-1ddb487d19a4)
-## Result :
-Thus a python program using OpenCV is written to do the following image manipulations:
-
-i) Extract ROI from an image. ii) Perform handwritting detection in an image. iii) Perform object detection with label in an image.
 
